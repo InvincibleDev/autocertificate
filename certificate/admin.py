@@ -5,3 +5,4 @@ from certificate.models import *
 admin.site.register(Templates)
 admin.site.register(Blanks)
 admin.site.register(Csv)
+admin.site.register(Link)

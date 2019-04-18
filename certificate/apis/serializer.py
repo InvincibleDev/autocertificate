@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from certificate.models import Templates, Blanks
+from certificate.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 
@@ -22,8 +22,15 @@ class TemplateSerializer(serializers.ModelSerializer):
     blanks = TemplateBlankSerializer(many=True)
     class Meta:
         model = Templates
-        fields = ('id', 'template', 'user', 'blanks')
+        fields = ('id', 'template','title', 'user', 'blanks')
         depth = 1
 
 class CsvSerializer(serializers.Serializer):
-    headers=serializers.ListField()
+    headers = serializers.ListField()
+
+class LinkSerializer(serializers.ModelSerializer):
+    user=UserSerializer()
+    class Meta:
+        model = Link
+        fields = ('id','user','link','template_title')
+        depth=1
