@@ -150,15 +150,20 @@ class CsvViewset(viewsets.ViewSet):
         csvfile.name=f"{request.user.username}.xlsx"
         csvobject=Csv.objects.create(csvfile=csvfile)
         headers=self.get_headers(csvobject.csvfile.read())
+        if not headers:
+            return Response({"detail":"Unable to open file, File corrupted. Upload a new file"})
         serializer=CsvSerializer({"headers":[i.value for i in headers]})
         return Response(serializer.data)
 
 
     def get_headers(self,csvfile):
-        wb = xlrd.open_workbook(file_contents=csvfile)
-        sheet = wb.sheet_by_index(0)
-        headers=sheet.row(0)
-        return headers
+        try:
+            wb = xlrd.open_workbook(file_contents=csvfile)
+            sheet = wb.sheet_by_index(0)
+            headers=sheet.row(0)
+            return headers
+        except Exception as e:
+            return False
 
 
 
