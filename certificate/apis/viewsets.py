@@ -164,7 +164,7 @@ class CsvViewset(viewsets.ViewSet):
         csvfile=request.FILES.get('csv',None)
         if not csvfile:
             return Response({"detail":"FileNotFount"})
-        if not csvfile.name.endswith(".xlsx") or csvfile.name.endswith(".csv"):
+        if not (csvfile.name.endswith(".xlsx") or csvfile.name.endswith(".csv")):
             return Response({"detail":"UnSupportedFileFormat"})
         try:
             existingfile=Csv.objects.filter(csvfile=f"userfiles/{request.user.username}.xlsx")
