@@ -29,10 +29,36 @@ import shutil
 #         return queryset
 
 
-class SignupViewset(viewsets.ModelViewSet):
-    queryset=User.objects.all()
-    serializer_class=UserSerializer
+class SignupViewset(viewsets.ViewSet):
     permission_classes=(AllowAny,)
+
+    def create(self , request):
+        try:
+            username = request.data['username']
+            email = request.data['email']
+            password = request.data['password']
+            first_name = request.data['first_name']
+            last_name = request.data['last_name']
+            user = User.objects.create_user(
+                    username=username,
+                    email=email,
+                    password=password,
+                    first_name=first_name,
+                    last_name=last_name,
+                    )
+            return Response({'detail':user.id})
+        except:
+            return Response({'detail':'unable to create user'})
+
+    def list(self,request):
+        queryset= User.objects.all()
+        serializer=UserSerializer(queryset,many=True)
+        return Response(serializer.data)
+
+    def retrieve(self,request,pk=None):
+        queryset= User.objects.filter(pk=pk)
+        serializer=UserSerializer(queryset,many=True)
+        return Response(serializer.data)
 
 
 class BlankViewset(viewsets.ViewSet):
@@ -98,8 +124,8 @@ class BlankViewset(viewsets.ViewSet):
 
         shutil.make_archive(f'{template.title}', 'zip', path)
         zipdata = open(os.path.join(settings.BASE_DIR, f'{template.title}.zip'), 'rb').read()
-        s3.Object(settings.AWS_STORAGE_BUCKET_NAME,f'zips/{request.user.username}/{template.title}.zip').put(Body=zipdata)
-        link=f'https://s3.amazonaws.com/autocertificate/zips/{request.user.username}/{template.title}.zip'
+        s3.Object(settings.AWS_STORAGE_BUCKET_NAME,f'zips/{request.user.username}/{template.title}.zip').put(Body=zipdata,ACL='public-read')
+        link=f'https://{settings.AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/zips/{request.user.username}/{template.title}.zip'
         link_=Link.objects.create(user=request.user,link=link,template_title=template.title)
 
         shutil.rmtree(path)

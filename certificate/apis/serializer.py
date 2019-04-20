@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from certificate.models import *
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import PBKDF2SHA1PasswordHasher
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'password','username', 'email')
         extra_kwargs={'password':{'write_only':True}}
 
-    validate_password = make_password
+    validate_password = PBKDF2SHA1PasswordHasher
 
 class TemplateBlankSerializer(serializers.ModelSerializer):
     class Meta:
