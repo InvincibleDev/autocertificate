@@ -199,7 +199,7 @@ class TemplateViewset(viewsets.ViewSet):
         title=request.data.get('title')
         if not templatefile:
             return Response({"detail":"FileNotFount"})
-        if not templatefile.name.endswith(".jpg") or templatefile.name.endswith(".png") or templatefile.name.endswith(".jpeg"):
+        if not (templatefile.name.endswith(".jpg") or templatefile.name.endswith(".png") or templatefile.name.endswith(".jpeg")):
             return Response({"detail":"UnSupportedFileFormat"})
         Templateobejct=Templates.objects.create(template=templatefile,user=request.user,title=title)
         return Response({"detail":"TemplateUploadedSucessfully"})
