@@ -1,0 +1,18 @@
+.main-container{
+	
+	position: relative;
+	left:600px;
+	width: 800px;
+	
+
+}
+
+#dashboard{
+	width:100%;
+	left:80px;
+	display: flex;
+	top:50px;
+}
+
+
+
