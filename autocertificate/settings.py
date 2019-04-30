@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'certificate',
     'storages',
     'rest_framework.authtoken',
+    'webserver'
 ]
 
 MIDDLEWARE = [

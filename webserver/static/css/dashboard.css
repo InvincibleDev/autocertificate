@@ -1,3 +1,7 @@
+body{
+	width: 100%;
+}
+
 .main-container{
 	
 	position: relative;
@@ -7,12 +11,23 @@
 
 }
 
-#dashboard{
+/*#dashboard{
 	width:100%;
 	left:80px;
-	display: flex;
-	top:50px;
+	display:flex;
+	max-width:700px;
+/*	flex-wrap: wrap;
+*/	/*top:50px;*/
+/*}*/
+
+#dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  flex: 0 0 500px;
+  left: 60px;
 }
+
 
 
 

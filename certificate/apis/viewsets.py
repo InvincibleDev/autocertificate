@@ -15,7 +15,7 @@ from autocertificate import settings
 import boto3
 import botocore
 import shutil
-
+import json
 
 
 
@@ -63,12 +63,16 @@ class SignupViewset(viewsets.ViewSet):
 
 class BlankViewset(viewsets.ViewSet):
     def create(self,request):
-        template_id=request.data.get('template_id')
+        print(request.data)
+        template_id=request.data.dict().get('template_id')
+        print(template_id)
         template=Templates.objects.get(id=template_id)
         blanks=request.data.get('blanks')
+        print(blanks)
         user=request.user
         header_list={}
-        for blank in blanks:
+        for blank in json.loads(blanks):
+            print(blank['start'], blank['end'], blank['blank_no'], blank['col_name'])
             try:
                 blankobj=Blanks.objects.create(templates=template,blank_no=blank['blank_no'],start=blank['start'],end=blank['end'])
                 header_list[blank['blank_no']] = blank['col_name']
@@ -106,9 +110,10 @@ class BlankViewset(viewsets.ViewSet):
                 exists = False
         #
 
-        for blank in blanks:
-            start=literal_eval(blank['start'])
-            end=literal_eval(blank['end'])
+        for blank in json.loads(blanks):
+            print(blank)
+            start=blank['start']
+            end=blank['end']
             for i in range(sheet.ncols):
                 if sheet.cell_value(0, i) == blank['col_name']:
                     blank['values']=sheet.col_values(i)
@@ -118,7 +123,7 @@ class BlankViewset(viewsets.ViewSet):
             img=Image.open(template.template)
             imgdraw=ImageDraw.Draw(img)
 
-            for blan in blanks:
+            for blan in json.loads(blanks):
                 imgdraw.text(blan['start'],blan['values'][i],font=font,fill=(255,0,0,255))
             img.save(f'{request.user.username}/{request.user.username}{i}certificate.pdf',"PDF",resoultion = 100.0)
 

@@ -180,6 +180,7 @@ function initDraw(canvas) {
     draw.onclick = function(e) {
         var start;
         var end;
+        var selected_input;
         
         var done = false;
         var blank_no;
@@ -216,13 +217,18 @@ function initDraw(canvas) {
 
                 // };
                 var blank = $("#blank");
-                var input = `<select  class="custom-select">`
+                var input = `<select  class="custom-select" id="selecter">`
                 for (let i in h1) {
                     input += `<option value='${i}'>${ h1[i] }</option>`;
+
 
                 }
 
                 blank.append("<br><br />"+input + `</select>`);
+                selecterr=document.getElementById("selecter")
+
+                selected_input=selecterr.options[selecterr.selectedIndex].text;
+                console.log(selected_input)
 
 
 
@@ -235,7 +241,7 @@ function initDraw(canvas) {
                 document.getElementById("submit-btn").hidden = false;
                 document.getElementById("download").hidden = false;
                 var size=document.getElementById("input");
-                size.style["width"]="300px";
+                    
 
             } else {
 
@@ -266,11 +272,14 @@ function initDraw(canvas) {
             var id = location[location.length - 2];
 
             if (done) {
+             
 
                 var blank = {
                     start: start,
                     end: end,
-                    blank_no: blank_no
+                    blank_no: blank_no,
+                    col_name: selected_input
+
                 };
 
 
@@ -299,18 +308,18 @@ function initDraw(canvas) {
 
 
 $(document).on('click',"#submit-btn", function() {
-    initDraw();
     
     var data = {};
     data["template_id"] = id;
-    data["blanks"] = blanks;
+    data["blanks"] = JSON.stringify(blanks);
+    console.log(data)
 
 
     $.ajax({
         method: 'POST',
         url: 'http://127.0.0.1:8000/api/blankupload/',
-        data: JSON.stringify(data),
-        dataType: 'application/json',
+        data: data,
+        type: 'application/json',
         beforeSend: function(xhr) {
             xhr.setRequestHeader("Authorization", "Token " + window.localStorage['token']);
         },

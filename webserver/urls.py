@@ -8,4 +8,5 @@ urlpatterns = [
 	path('signup/',signup),
 	path('dashboard/',dashboard),
 	path('certificate/<int:pk>/',certificate),
+	
 ]
