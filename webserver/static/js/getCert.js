@@ -17,10 +17,10 @@ $(document).ready(
  				<div class="my" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
                       transition: 0.3s;
                       width:500px;height:340px; margin:50px;">
-                    <h4 style="font-weight:500; letter-spacing:0.1px;font-size:25px;position:relative;top:10px;text-align:center;color:#079992;"><b>${certificate.title}</b></h4> 
 
   					<a href="/certificate/${parseInt(certificate.id)}">
  					<img src="${certificate.template}" style="width:100%;height:300px;padding:10px;">
+                    <h4 style="font-weight:500; letter-spacing:0.1px;font-size:25px;position:relative;top:2px;text-align:center;color:#079992;"><b>${certificate.title}</b></h4> 
  					</a>
  					
     				</div>
