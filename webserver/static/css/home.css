@@ -1,23 +1,29 @@
 body{
-	width: 100%;
+	max-width: 100%;
 	background:linear-gradient(to top,#1e3799 30%,#ffffff 30%);
 	height: 150vh;
+
 }
 .main-container{
 	
 	background-repeat: no-repeat;
 	height:100vh;
+	overflow: hidden;
 }
 .main-container1{
 	height: 70vh;
 	position: relative;
 	top: 300px;
+	overflow: hidden;
+
 }
 .main-container2{
 	width: 50%;
 	position: relative;
 	left:500px;
 	top:50px;
+	overflow: hidden;
+
 }
 .flip-card {
   background-color: transparent;
