@@ -8,13 +8,13 @@ body{
 	
 	background-repeat: no-repeat;
 	height:100vh;
-	overflow: hidden;
+	
 }
 .main-container1{
 	height: 70vh;
 	position: relative;
 	top: 300px;
-	overflow: hidden;
+	
 
 }
 .main-container2{
@@ -22,8 +22,7 @@ body{
 	position: relative;
 	left:500px;
 	top:50px;
-	overflow: hidden;
-
+	
 }
 .flip-card {
   background-color: transparent;
