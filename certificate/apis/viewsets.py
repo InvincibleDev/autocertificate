@@ -63,18 +63,15 @@ class SignupViewset(viewsets.ViewSet):
 
 class BlankViewset(viewsets.ViewSet):
     def create(self,request):
-        print(request.data)
+        #print(request.data.get("template_id"))
         template_id=request.data.dict().get('template_id')
-        print(template_id)
         template=Templates.objects.get(id=template_id)
         blanks=request.data.get('blanks')
-        print(blanks)
         user=request.user
         header_list={}
         for blank in json.loads(blanks):
-            print(blank['start'], blank['end'], blank['blank_no'], blank['col_name'])
             try:
-                blankobj=Blanks.objects.create(templates=template,blank_no=blank['blank_no'],start=blank['start'],end=blank['end'])
+                #blankobj=Blanks.objects.create(templates=template,blank_no=blank['blank_no'],start=blank['start'],end=blank['end'])
                 header_list[blank['blank_no']] = blank['col_name']
             except Exception as e:
                 return Response({'detail':str(e)})
@@ -109,9 +106,10 @@ class BlankViewset(viewsets.ViewSet):
             if error_code == '404':
                 exists = False
         #
+        blanks=json.loads(blanks)
 
-        for blank in json.loads(blanks):
-            print(blank)
+        for blank in blanks:
+
             start=blank['start']
             end=blank['end']
             for i in range(sheet.ncols):
@@ -122,8 +120,7 @@ class BlankViewset(viewsets.ViewSet):
         for i in range(sheet.nrows):
             img=Image.open(template.template)
             imgdraw=ImageDraw.Draw(img)
-
-            for blan in json.loads(blanks):
+            for blan in blanks:
                 imgdraw.text(blan['start'],blan['values'][i],font=font,fill=(255,0,0,255))
             img.save(f'{request.user.username}/{request.user.username}{i}certificate.pdf',"PDF",resoultion = 100.0)
 

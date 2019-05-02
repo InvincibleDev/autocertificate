@@ -7,7 +7,7 @@ $(document).ready(function() {
         url: 'http://127.0.0.1:8000/api/certificates/' + id,
         success: function(response) {
 
-            console.log(response)
+            // console.log(response)
             var canvas = $("#canvas");
             var img = `<img src='${response[0].template}' style="position:absolute; z-index:1; max-width:100%">`;
             canvas.append(img);
@@ -17,11 +17,11 @@ $(document).ready(function() {
                 let bs = JSON.parse(key.start);
                 let be = JSON.parse(key.end);
 
-                console.log(bs, be);
+                // console.log(bs, be);
 
 
 
-                console.log("begun.");
+                // console.log("begun.");
                 element = document.createElement('div');
                 element.innerHTML = bl;
                 element.style.position = 'absolute';
@@ -33,7 +33,7 @@ $(document).ready(function() {
                 element.style.top = be + 'px';
                 element.style.top = (bs[1] - be[1] < 0) ? bs[1] + 'px' : be[1] + 'px';
                 element.style.left = (bs[0] - be[0] < 0) ? bs[0] + 'px' : be[0] + 'px';
-                console.log(element);
+                // console.log(element);
                 canvas.append(element);
                 // can=document.getElementById("canvas");
                 // console.log(can)
@@ -68,17 +68,17 @@ $(document).ready(function() {
 
 var formdata;
 $('#file').change(function() {
-    //on change event 
+    //on change event
     formdata = new FormData();
     if ($(this).prop('files').length > 0) {
-        console.log("Got file");
-        console.log("a");
+        // console.log("Got file");
+        // console.log("a");
         file = $(this).prop('files')[0];
-        console.log(file);
+        // console.log(file);
         formdata.append("csv", file);
 
         for (var key of formdata.entries()) {
-            console.log(key[0] + ', ' + key[1]);
+            // console.log(key[0] + ', ' + key[1]);
         }
     }
 });
@@ -86,7 +86,7 @@ $('#file').change(function() {
 var h1 = [];
 $("#upload-csv").on("click", function() {
 
-    console.log("In");
+    // console.log("In");
     $.ajax({
         method: 'POST',
         enctype: 'multipart/form-data',
@@ -102,26 +102,26 @@ $("#upload-csv").on("click", function() {
 
         success: function(response) {
             document.getElementById("closebtn").click();
-            
+
             var error = response.detail;
             if (error){
-            console.log(error);
+            // console.log(error);
 
             if (response = error) {
                 alert(error);
                 // alert(error);
                 document.getElementById("draw").hidden = true;
             }
-                
+
 
             }
-            
+
 
             if (response.headers){
 
                 try{
                      for (var header of response.headers) {
-                        console.log(header);
+                        // console.log(header);
                         h1.push(header);
                     }
             document.getElementById("draw").hidden = false;
@@ -130,14 +130,14 @@ $("#upload-csv").on("click", function() {
 
         }
                 }
-       
-            console.log(h1);
 
-            
-            
-            
-            
-            
+            // console.log(h1);
+
+
+
+
+
+
 
 
 
@@ -181,13 +181,13 @@ function initDraw(canvas) {
         var start;
         var end;
         var selected_input;
-        
+
         var done = false;
         var blank_no;
         canvas.onclick = function(e) {
             var pos = getMousePos(canvas, e);
             var values = Object.values(pos);
-            console.log(values);
+            // console.log(values);
 
 
 
@@ -197,41 +197,45 @@ function initDraw(canvas) {
             if (element !== null) {
 
                 var pos = getMousePos(canvas, e);
-                console.log(pos);
+                // console.log(pos);
                 var values = Object.values(pos);
-                console.log(values);
+                // console.log(values);
                 end = values;
 
                 element = null;
                 canvas.style.cursor = "default";
-                console.log("finished");
+                // console.log("finished");
                 // for(let key of canvas.onclick){
 
-                console.log(blank_count);
+                // console.log(blank_count);
                 var blank_no = blank_count;
                 var blank_no1=$("#blank_no");
 
                 blank_no1.append("<br><br />"+"Blank Number"+blank_no);
-                console.log(blank_no1);
+                // console.log(blank_no1);
 
 
                 // };
                 var blank = $("#blank");
-                var input = `<select  class="custom-select" id="selecter">`
+                var x = document.createElement("SELECT");
+                x.setAttribute("id", "mySelect"+blank_no);
+                document.body.appendChild(x);
                 for (let i in h1) {
-                    input += `<option value='${i}'>${ h1[i] }</option>`;
-
-
+                  var z = document.createElement("option");
+                  z.setAttribute("value", h1[i]);
+                  var t = document.createTextNode(h1[i]);
+                  z.appendChild(t);
+                  document.getElementById("mySelect"+blank_no).appendChild(z);
+                  // console.log(h1[i])
                 }
 
-                blank.append("<br><br />"+input + `</select>`);
-                selecterr=document.getElementById("selecter")
 
-                selected_input=selecterr.options[selecterr.selectedIndex].text;
-                console.log(selected_input)
-
-
-
+                // var closebtn=document.createElement("BUTTON");
+                // closebtn.setAttribute("id", "close"+blank_no);
+                // closebtn.innerHTML = "remove";
+                blank.append("<br><br>");
+                blank.append(x)
+                //blank.append(closebtn)
                 blank_count++;
 
 
@@ -239,20 +243,20 @@ function initDraw(canvas) {
                 // input.style["width"] = "300px";
 
                 document.getElementById("submit-btn").hidden = false;
-                document.getElementById("download").hidden = false;
+
                 var size=document.getElementById("input");
-                    
+
 
             } else {
 
                 var pos = getMousePos(canvas, e);
-                console.log(pos);
+                // console.log(pos);
                 var values = Object.values(pos);
-                console.log(values);
+                // console.log(values);
                 start = values;
 
 
-                console.log("begun.");
+                // console.log("begun.");
                 mouse.startX = mouse.x;
                 mouse.startY = mouse.y;
                 element = document.createElement('div');
@@ -260,7 +264,7 @@ function initDraw(canvas) {
                 element.className = 'rectangle';
                 element.style.left = mouse.x + 'px';
                 element.style.top = mouse.y + 'px';
-                console.log(element);
+                // console.log(element);
                 canvas.appendChild(element);
                 canvas.style.cursor = "crosshair";
             }
@@ -272,7 +276,7 @@ function initDraw(canvas) {
             var id = location[location.length - 2];
 
             if (done) {
-             
+
 
                 var blank = {
                     start: start,
@@ -283,12 +287,14 @@ function initDraw(canvas) {
                 };
 
 
-                console.log(blank);
                 blanks.push(blank);
-                console.log(blanks);
                 done = false;
 
             }
+            // selecterr=document.getElementById("myselect")
+            //
+            // selected_input=selecterr.options[selecterr.selectedIndex].text;
+            // console.log(selected_input)
         }
 
     }
@@ -307,12 +313,31 @@ function initDraw(canvas) {
 }
 
 
+$(document).on('click',"#submit-btn", function(){
+
+}
+
+
 $(document).on('click',"#submit-btn", function() {
-    
+  document.getElementById("overlay").style.display='block';
+
+  for (let i in blanks){
+    blank=blanks[i];
+    blank_no=blank["blank_no"]
+    b_id="mySelect"+blank_no;
+    // console.log(b_id);
+    e=document.getElementById(b_id);
+    blank["col_name"]=e.options[e.selectedIndex].text;
+  }
+  // for(var key in blanks){
+  //
+  // }
+  // console.log(blanks)
+
     var data = {};
     data["template_id"] = id;
     data["blanks"] = JSON.stringify(blanks);
-    console.log(data)
+
 
 
     $.ajax({
@@ -324,7 +349,16 @@ $(document).on('click',"#submit-btn", function() {
             xhr.setRequestHeader("Authorization", "Token " + window.localStorage['token']);
         },
         success: function(response) {
-            console.log(response);
+          document.getElementById("overlay").style.display='none';
+          if (response.link){
+            document.getElementById("download").hidden = false;
+            document.getElementById("download").href=response.link
+          }
+            // console.log(response);
+          if (!response.link){
+            alert("An error occured")
+          }
+
 
         }
     });

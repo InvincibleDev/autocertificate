@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>certificate</title>
+		<title>Auto Certifiy</title>
 		<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/lux/bootstrap.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 		<style>
-		
+
+
+
 		.rectangle {
 		border: 2px solid #4cd137;
 		position: absolute;
@@ -17,14 +19,44 @@
 				overflow-y: scroll;
 				overflow-x: hidden;
 			}
-		
+
+
+			.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+ }
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+
 		</style>
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height: 95px;width:210vh;">
 			<div class="container">
-				
-				<a class="navbar-brand" href="#" style="font-size: 20px;">Auto-Certify</a>
+
+				<a class="navbar-brand" href="dashboard.html" style="font-size: 20px;">Auto-Certify</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 				</button>
@@ -32,7 +64,7 @@
 					<div class="navbar-nav ml-auto">
 						<a class="nav-item nav-link" style="color:#4cd137;font-size:17px;" data-toggle="modal"  href="#" data-target='#myModal'>Upload Excel File</a>
 						<a class="nav-item nav-link" href="/"style="font-size: 17px;color: #dcdde1">Logout</a>
-						
+
 					</div>
 				</div>
 			</div>
@@ -45,7 +77,7 @@
       <div class="modal-header">
       	<h4 class="modal-title">Add Excel File</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        
+
       </div>
       <div class="modal-body">
 
@@ -54,7 +86,7 @@
 		<input type="file" name="csv" id="file">
 			<button class="btn btn-info btn btn-primary" id="upload-csv">Upload CSV</button>
 		</div>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" id="closebtn" data-dismiss="modal">Close</button>
@@ -68,9 +100,13 @@
 		<br><br><br>
 
 
-		
+
 		<!-- <div style="overflow: auto"> -->
-			
+		<div class="overlay" id ="overlay" style="display:none;">
+		<div class="loader" id="loader" style=" position:absolute; top:50%; left:50%;">
+</div>
+</div>
+
 		<div class="row">
 			<div class="col-md-6">
 				<div id="canvas" style="position: relative;padding:20px" >
@@ -81,42 +117,42 @@
 				<button class=" btn btn-md btn-success" id="draw" hidden="true">Draw Blank</button>
 				<button class="btn btn-md btn-success" id="submit-btn" hidden="true" style="position: relative;left:50px;">submit</button>
 
-				<button class="btn btn-md btn-primary" id="download" hidden="true" style="position: relative;left:100px;width:300px;">Download</button>
+				<a class="btn btn-md btn-primary" id="download" hidden="true" href="" style="position: relative;left:100px;width:300px;">Download</a>
 			</div>
 			<div class="row">
-				
 
-				
+
+
 				<div class="col-md-5">
 					<div id="blank_no">
-						
+
 					</div>
-					
+
 				</div>
 				<div class="col-md-4" style="position: relative; right: 100px;">
 					<div id="blank">
-						
+
 					</div>
 				</div>
 				<br>
 
 			</div>
 
-				
-			
+
+
 
 			</div>
-		
-			
+
+
 			<br>
 			<br>
-			
+
 		</div>
-		
-		
-			
+
+
+
 		<!-- </div> -->
-		
+
 		<script
 		src="http://code.jquery.com/jquery-3.4.0.min.js"
 		integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
