@@ -211,7 +211,9 @@ function initDraw(canvas) {
                 var blank_no = blank_count;
                 var blank_no1=$("#blank_no");
 
-                blank_no1.append("<br><br />"+"Blank Number"+blank_no);
+                blank_no1.append("<br><br />"+""+blank_no);
+                document.getElementById("blno").hidden=false;
+                document.getElementById("col_nam").hidden=false;
                 // console.log(blank_no1);
 
 
@@ -219,6 +221,7 @@ function initDraw(canvas) {
                 var blank = $("#blank");
                 var x = document.createElement("SELECT");
                 x.setAttribute("id", "mySelect"+blank_no);
+                x.className="custom-select"
                 document.body.appendChild(x);
                 for (let i in h1) {
                   var z = document.createElement("option");
@@ -351,7 +354,7 @@ $(document).on('click',"#submit-btn", function() {
             document.getElementById("download").hidden = false;
             document.getElementById("download").href=response.link;
           }
-            // console.log(response);
+            console.log(response);
           if (!response.link){
             alert("An error occured")
           }

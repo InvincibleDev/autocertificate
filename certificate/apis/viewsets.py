@@ -91,7 +91,7 @@ class BlankViewset(viewsets.ViewSet):
         buffered = BytesIO()
         os.mkdir(f'{request.user.username}')
         path=str(settings.BASE_DIR)+(f'\{request.user.username}')
-        font = ImageFont.truetype("aller.ttf", 20)
+        font = ImageFont.truetype("arial.ttf", 20)
 
 
         #connecting to s3
