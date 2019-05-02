@@ -256,7 +256,7 @@ function initDraw(canvas) {
                 start = values;
 
 
-                // console.log("begun.");
+                 console.log("begun.");
                 mouse.startX = mouse.x;
                 mouse.startY = mouse.y;
                 element = document.createElement('div');
@@ -264,7 +264,7 @@ function initDraw(canvas) {
                 element.className = 'rectangle';
                 element.style.left = mouse.x + 'px';
                 element.style.top = mouse.y + 'px';
-                // console.log(element);
+                 console.log(element);
                 canvas.appendChild(element);
                 canvas.style.cursor = "crosshair";
             }
@@ -313,9 +313,6 @@ function initDraw(canvas) {
 }
 
 
-$(document).on('click',"#submit-btn", function(){
-
-}
 
 
 $(document).on('click',"#submit-btn", function() {
@@ -352,7 +349,7 @@ $(document).on('click',"#submit-btn", function() {
           document.getElementById("overlay").style.display='none';
           if (response.link){
             document.getElementById("download").hidden = false;
-            document.getElementById("download").href=response.link
+            document.getElementById("download").href=response.link;
           }
             // console.log(response);
           if (!response.link){

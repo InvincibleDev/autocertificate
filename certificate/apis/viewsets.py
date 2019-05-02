@@ -91,7 +91,7 @@ class BlankViewset(viewsets.ViewSet):
         buffered = BytesIO()
         os.mkdir(f'{request.user.username}')
         path=str(settings.BASE_DIR)+(f'\{request.user.username}')
-        font = ImageFont.truetype("arial.ttf", 20)
+        font = ImageFont.truetype("aller.ttf", 20)
 
 
         #connecting to s3
@@ -121,8 +121,8 @@ class BlankViewset(viewsets.ViewSet):
             img=Image.open(template.template)
             imgdraw=ImageDraw.Draw(img)
             for blan in blanks:
-                imgdraw.text(blan['start'],blan['values'][i],font=font,fill=(255,0,0,255))
-            img.save(f'{request.user.username}/{request.user.username}{i}certificate.pdf',"PDF",resoultion = 100.0)
+                imgdraw.text(blan['start'],blan['values'][i],font=font,fill=(10,10,10,255))
+            img.save(f'{request.user.username}/{request.user.username}{i}certificate.png',"PNG",resoultion = 100.0)
 
         shutil.make_archive(f'{template.title}', 'zip', path)
         zipdata = open(os.path.join(settings.BASE_DIR, f'{template.title}.zip'), 'rb').read()
